@@ -56,8 +56,9 @@ resource "aws_iam_policy" "this" {
   policy = templatefile(
     "${path.module}/policy.tmpl",
     {
-      vpc_check             = var.subnet_ids != null
-      dd_api_key_secret_arn = var.dd_api_key_secret_arn
+      vpc_check                     = var.subnet_ids != null
+      dead_letter_config_target_arn = var.dead_letter_config != null ? var.dead_letter_config.target_arn : ""
+      dd_api_key_secret_arn         = var.dd_api_key_secret_arn
     }
   )
 

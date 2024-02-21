@@ -63,6 +63,14 @@ data "aws_iam_policy_document" "custom" {
       data.aws_secretsmanager_secret.datadog_api_key.arn
     ]
   }
+
+  statement {
+    sid     = "SqsSendMessageDeadLetterConfig"
+    actions = ["sqs:SendMessage"]
+    resources = [
+      aws_sqs_queue.dead_letter_queue.arn
+    ]
+  }
 }
 
 resource "aws_iam_policy" "custom" {
@@ -107,6 +115,7 @@ module "default" {
   }
   log_forwarder_lambda_tags                   = { LogForwarderLambda = true }
   log_forwarder_log_kms_key_id                = aws_kms_alias.datadog.target_key_arn
+  log_forwarder_dead_letter_config            = { target_arn = aws_sqs_queue.dead_letter_queue.arn }
   log_forwarder_log_retention_days            = 3
   log_forwarder_bucket_prefix                 = "logforwarder"
   log_forwarder_s3_zip_server_side_encryption = "AES256"
@@ -126,6 +135,7 @@ module "default" {
   rds_em_forwarder_architectures                  = ["arm64"]
   rds_em_forwarder_reserved_concurrent_executions = 10
   rds_em_forwarder_kms_key_arn                    = aws_kms_alias.datadog.target_key_arn
+  rds_em_forwarder_dead_letter_config             = { target_arn = aws_sqs_queue.dead_letter_queue.arn }
   rds_em_forwarder_subnet_ids                     = module.vpc.private_subnets
   rds_em_forwarder_security_group_ids             = [module.security_group.security_group_id]
   rds_em_forwarder_environment_variables          = {}
@@ -147,6 +157,7 @@ module "default" {
   vpc_fl_forwarder_architectures                  = ["arm64"]
   vpc_fl_forwarder_reserved_concurrent_executions = 10
   vpc_fl_forwarder_kms_key_arn                    = aws_kms_alias.datadog.target_key_arn
+  vpc_fl_forwarder_dead_letter_config             = { target_arn = aws_sqs_queue.dead_letter_queue.arn }
   vpc_fl_forwarder_subnet_ids                     = module.vpc.private_subnets
   vpc_fl_forwarder_security_group_ids             = [module.security_group.security_group_id]
   vpc_fl_forwarder_environment_variables          = {}
@@ -366,6 +377,12 @@ module "log_bucket_2" {
       }
     }
   }
+
+  tags = local.tags
+}
+
+resource "aws_sqs_queue" "dead_letter_queue" {
+  name = local.name
 
   tags = local.tags
 }

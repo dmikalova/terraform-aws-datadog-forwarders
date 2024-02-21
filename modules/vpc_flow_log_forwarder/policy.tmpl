@@ -25,6 +25,12 @@
       "Effect": "Allow",
       "Resource": "*",
       "Sid": "KmsDecrypt"
-    }
+    }%{ if dead_letter_config_target_arn != "" },
+    {
+      "Action": "sqs:SendMessage",
+      "Effect": "Allow",
+      "Resource": "${dead_letter_config_target_arn}",
+      "Sid": "SqsSendMessageDeadLetterConfig"
+    }%{ endif }
   ]
 }
