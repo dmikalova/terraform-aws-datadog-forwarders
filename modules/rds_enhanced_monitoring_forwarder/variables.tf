@@ -169,6 +169,14 @@ variable "kms_key_arn" {
   default     = null
 }
 
+variable "dead_letter_config" {
+  description = "Object of configuration values for the Lambda function's dead letter queue"
+  type = object({
+    target_arn = string
+  })
+  default = null
+}
+
 variable "subnet_ids" {
   description = "List of subnet ids when Lambda Function should run in the VPC. Usually private or intra subnets."
   type        = list(string)

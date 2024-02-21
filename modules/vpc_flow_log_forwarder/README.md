@@ -71,6 +71,7 @@ No modules.
 | <a name="input_dd_api_key_secret_arn"></a> [dd\_api\_key\_secret\_arn](#input\_dd\_api\_key\_secret\_arn) | The ARN of the Secrets Manager secret storing the Datadog API key, if you already have it stored in Secrets Manager | `string` | `""` | no |
 | <a name="input_dd_app_key"></a> [dd\_app\_key](#input\_dd\_app\_key) | The Datadog application key associated with the user account that created it, which can be found from the APIs page | `string` | `""` | no |
 | <a name="input_dd_site"></a> [dd\_site](#input\_dd\_site) | Define your Datadog Site to send data to. For the Datadog EU site, set to datadoghq.eu | `string` | `"datadoghq.com"` | no |
+| <a name="input_dead_letter_config"></a> [dead\_letter\_config](#input\_dead\_letter\_config) | Object of configuration values for the Lambda function's dead letter queue | <pre>object({<br>    target_arn = string<br>  })</pre> | `null` | no |
 | <a name="input_environment_variables"></a> [environment\_variables](#input\_environment\_variables) | A map of environment variables for the forwarder lambda function | `map(string)` | `{}` | no |
 | <a name="input_forwarder_version"></a> [forwarder\_version](#input\_forwarder\_version) | VPC flow log monitoring version - see https://github.com/DataDog/datadog-serverless-functions/releases | `string` | `"3.73.0"` | no |
 | <a name="input_kms_alias"></a> [kms\_alias](#input\_kms\_alias) | Alias of KMS key used to encrypt the Datadog API keys - must start with `alias/` | `string` | n/a | yes |

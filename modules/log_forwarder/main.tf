@@ -170,6 +170,12 @@ resource "aws_lambda_function" "this" {
   reserved_concurrent_executions = var.reserved_concurrent_executions
   kms_key_arn                    = var.kms_key_arn
 
+  dynamic "dead_letter_config" {
+    for_each = var.dead_letter_config == null ? [] : [var.dead_letter_config]
+    content {
+      target_arn = dead_letter_config.value.target_arn
+    }
+  }
 
   dynamic "vpc_config" {
     for_each = var.subnet_ids != null && var.security_group_ids != null ? [true] : []

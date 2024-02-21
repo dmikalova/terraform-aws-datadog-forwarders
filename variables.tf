@@ -256,6 +256,14 @@ variable "log_forwarder_kms_key_arn" {
   default     = null
 }
 
+variable "log_forwarder_dead_letter_config" {
+  description = "Object of configuration values for forwarder Lambda function's dead letter queue"
+  type = object({
+    target_arn = string
+  })
+  default = null
+}
+
 variable "log_forwarder_subnet_ids" {
   description = "List of subnet ids when forwarder lambda function should run in the VPC. Usually private or intra subnets"
   type        = list(string)
@@ -442,6 +450,14 @@ variable "rds_em_forwarder_kms_key_arn" {
   description = "KMS key that is used to encrypt environment variables. If this configuration is not provided when environment variables are in use, AWS Lambda uses a default service key"
   type        = string
   default     = null
+}
+
+variable "rds_em_forwarder_dead_letter_config" {
+  description = "Object of configuration values for the log forwarder Lambda function's dead letter queue"
+  type = object({
+    target_arn = string
+  })
+  default = null
 }
 
 variable "rds_em_forwarder_subnet_ids" {
@@ -642,6 +658,14 @@ variable "vpc_fl_forwarder_kms_key_arn" {
   description = "KMS key that is used to encrypt environment variables. If this configuration is not provided when environment variables are in use, AWS Lambda uses a default service key"
   type        = string
   default     = null
+}
+
+variable "vpc_fl_forwarder_dead_letter_config" {
+  description = "Object of configuration values for log forwarder Lambda function's dead letter queue"
+  type = object({
+    target_arn = string
+  })
+  default = null
 }
 
 variable "vpc_fl_forwarder_subnet_ids" {

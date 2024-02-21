@@ -21,6 +21,7 @@ module "log_forwarder" {
   architectures                  = var.log_forwarder_architectures
   reserved_concurrent_executions = var.log_forwarder_reserved_concurrent_executions
   kms_key_arn                    = var.log_forwarder_kms_key_arn
+  dead_letter_config             = var.log_forwarder_dead_letter_config
   subnet_ids                     = var.log_forwarder_subnet_ids
   security_group_ids             = var.log_forwarder_security_group_ids
   environment_variables          = var.log_forwarder_environment_variables
@@ -82,6 +83,7 @@ module "rds_enhanced_monitoring_forwarder" {
   architectures                  = var.rds_em_forwarder_architectures
   reserved_concurrent_executions = var.rds_em_forwarder_reserved_concurrent_executions
   kms_key_arn                    = var.rds_em_forwarder_kms_key_arn
+  dead_letter_config             = var.rds_em_forwarder_dead_letter_config
   subnet_ids                     = var.rds_em_forwarder_subnet_ids
   security_group_ids             = var.rds_em_forwarder_security_group_ids
   environment_variables          = var.rds_em_forwarder_environment_variables
@@ -130,6 +132,7 @@ module "vpc_flow_log_forwarder" {
   architectures                  = var.vpc_fl_forwarder_architectures
   reserved_concurrent_executions = var.vpc_fl_forwarder_reserved_concurrent_executions
   kms_key_arn                    = var.vpc_fl_forwarder_kms_key_arn
+  dead_letter_config             = var.vpc_fl_forwarder_dead_letter_config
   subnet_ids                     = var.vpc_fl_forwarder_subnet_ids
   security_group_ids             = var.vpc_fl_forwarder_security_group_ids
   environment_variables          = var.vpc_fl_forwarder_environment_variables
